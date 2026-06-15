@@ -4,11 +4,24 @@ import uvicorn
 
 from fastapi import FastAPI, Path, Query
 
-app = FastAPI()
+app = FastAPI(
+    title="Stepik Project",
+    summary="Third episode",
+    description="The CRUD application supports **writing**, *reading*, updating, and deleting posts.",
+)
 
 country_dict = {
     "Russia": ["Moscow", "St. Petersburg", "Novosibirsk", "Ekaterinburg", "Kazan"],
     "USA": ["New York", "Los Angeles", "Chicago", "Houston", "Philadelphia"],
+}
+
+profiles_dict = {
+    "alex": {
+        "name": "Александр",
+        "age": 33,
+        "phone": "+79463456789",
+        "email": "alex@my-site.com",
+    },
 }
 
 
@@ -40,6 +53,18 @@ async def list_cities(country: str, limit: int) -> dict:
     return {"country": country, "cities": cities[0:limit]}
 
 
+@app.get("/users")
+async def retrieve_user_profile(
+    username: Annotated[
+        str, Query(min_length=2, max_length=50, description="Имя пользователя")
+    ],
+):
+    if username in profiles_dict:
+        return profiles_dict[username]
+    else:
+        return {"message": f"Пользователь {username} не найден"}
+
+
 @app.get("/users/{name}")
 async def get_user(
     name: Annotated[
@@ -52,6 +77,20 @@ async def get_user(
     ],
 ) -> dict:
     return {"user_name": name}
+
+
+@app.get("/category/{category_id}/products")
+async def category(
+    category_id: Annotated[
+        int,
+        Path(
+            gt=0,
+            description="Category ID",
+        ),
+    ],
+    page: int,
+):
+    return {"category_id": category_id, "page": page}
 
 
 if __name__ == "__main__":
