@@ -20,15 +20,10 @@ async def login(
             min_length=3,
             max_length=15,
             description="Enter your username",
-            examples=[
-                "permin0ff",
-            ],
+            examples=["permin0ff"],
         ),
     ],
-    first_name: str | None = Query(
-        default=None,
-        max_length=10,
-    ),
+    first_name: Annotated[str | None, Query(max_length=10, pattern="^J|s$")] = None,
 ) -> dict:
     return {"user": username, "Name": first_name}
 
@@ -45,9 +40,18 @@ async def list_cities(country: str, limit: int) -> dict:
     return {"country": country, "cities": cities[0:limit]}
 
 
-@app.get("/users/{name}/{age}")
-async def users(name: str, age: int) -> dict:
-    return {"user_name": name, "user_age": age}
+@app.get("/users/{name}")
+async def get_user(
+    name: Annotated[
+        str,
+        Path(
+            min_length=4,
+            max_length=20,
+            description="Enter your name",
+        ),
+    ],
+) -> dict:
+    return {"user_name": name}
 
 
 if __name__ == "__main__":
