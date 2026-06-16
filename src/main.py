@@ -44,15 +44,11 @@ async def create_message(message_create: MessageCreate) -> Message:
     return new_message
 
 
-@app.put("/messages/{message_id}")
-async def update_message(message_id: int, updated_message: Message) -> Message:
-    if updated_message.id != message_id:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="The ID in the request body must match the ID in the path",
-        )
+@app.put("/messages/{message_id}", response_model=Message)
+async def update_message(message_id: int, message_create: MessageCreate) -> Message:
     for i, message in enumerate(messages_db):
         if message.id == message_id:
+            updated_message = Message(id=message_id, content=message_create.content)
             messages_db[i] = updated_message
             return updated_message
     raise HTTPException(
@@ -69,6 +65,7 @@ async def delete_message(message_id: int):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Message not found"
         )
+    return None
 
 
 @app.delete("/messages", status_code=status.HTTP_200_OK)
