@@ -1,12 +1,11 @@
-from fastapi import FastAPI, Request
-from fastapi.templating import Jinja2Templates
+from fastapi import APIRouter, FastAPI
 
-app = FastAPI()
-templates = Jinja2Templates(directory="templates")
+router = APIRouter(
+    prefix="/notes",
+    tags=["notes"],
+)
 
 
-@app.get("/")
-def read_root(request: Request):
-    return templates.TemplateResponse(
-        request=request, name="index.html", context={"user_name": "Alice"}
-    )
+@router.get("/")
+async def get_notes():
+    return "Notes API is working"
