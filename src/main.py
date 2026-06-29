@@ -2,6 +2,7 @@ import uvicorn
 from fastapi import FastAPI
 
 from src.routers import categories
+from src.routers import products
 
 # Создаём приложение FastAPI
 app = FastAPI(
@@ -10,6 +11,7 @@ app = FastAPI(
 )
 
 # Подключаем маршруты категорий
+app.include_router(categories.router)
 app.include_router(categories.router)
 
 
