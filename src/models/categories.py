@@ -4,7 +4,7 @@ from sqlalchemy import ForeignKey
 
 from src.database import Base
 
-from models.products import Product
+from src.models.products import Product
 
 
 class Category(Base):

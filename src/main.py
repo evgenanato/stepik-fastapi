@@ -1,5 +1,10 @@
+import sys
+from pathlib import Path
+
 import uvicorn
 from fastapi import FastAPI
+
+sys.path.append(str(Path(__file__).parent.parent))
 
 from src.routers import categories
 from src.routers import products
