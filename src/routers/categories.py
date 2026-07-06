@@ -6,6 +6,10 @@ from sqlalchemy import select, update
 from sqlalchemy.orm import Session
 
 sys.path.append(str(Path(__file__).parent.parent.parent))
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.models.products import Product
 from src.models.categories import Category as CategoryModel
 from src.schemas import Category as CategorySchema, CategoryCreate
 from src.db_depends import get_db

@@ -2,8 +2,10 @@ from decimal import Decimal
 from sqlalchemy import String, Boolean, Integer, Numeric
 from sqlalchemy.orm import Mapped, mapped_column, relationship  # New
 from sqlalchemy import ForeignKey  # New
+from typing import TYPE_CHECKING
 
-# from src.models.categories import Category
+if TYPE_CHECKING:
+    from src.models.categories import Category
 from src.database import Base
 
 

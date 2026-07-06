@@ -3,8 +3,10 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import ForeignKey
 
 from src.database import Base
+from typing import TYPE_CHECKING
 
-from src.models.products import Product
+if TYPE_CHECKING:
+    from src.models.products import Product
 
 
 class Category(Base):
