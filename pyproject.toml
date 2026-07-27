@@ -1,13 +1,20 @@
 [project]
 name = "stepik"
 version = "0.1.0"
-requires-python = ">=3.14"
+requires-python = ">=3.11"
 dependencies = [
     "alembic>=1.18.4",
+    "asyncpg>=0.31.0",
+    "bcrypt==4.0.1",
     "black>=26.5.1",
+    "email-validator>=2.3.0",
     "fastapi>=0.136.3",
+    "greenlet>=3.5.1",
     "jinja2>=3.1.6",
+    "passlib>=1.7.4",
     "pydantic[email]>=2.13.4",
+    "pyjwt>=2.13.0",
+    "python-dotenv>=1.2.2",
     "python-multipart>=0.0.32",
     "sqlalchemy>=2.0.50",
     "uvicorn>=0.49.0",

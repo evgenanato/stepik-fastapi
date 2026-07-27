@@ -1,12 +1,13 @@
-from sqlalchemy import Integer, String, Boolean
+from sqlalchemy import Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from sqlalchemy import ForeignKey
 
-from src.database import Base
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
+
     from src.models.products import Product
+# from src.models.products import Product
+from src.database import Base
 
 
 class Category(Base):
@@ -18,14 +19,17 @@ class Category(Base):
         ForeignKey("categories.id"), nullable=True
     )
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
-
     products: Mapped[list["Product"]] = relationship(
-        "Product", back_populates="category"
+        "Product",
+        back_populates="category",
+        cascade="all, delete-orphan",
     )
-
     parent: Mapped["Category | None"] = relationship(
-        "Category", back_populates="children", remote_side="Category.id"
+        "Category",
+        back_populates="children",
+        remote_side="Category.id",
     )
     children: Mapped[list["Category"]] = relationship(
-        "Category", back_populates="parent"
+        "Category",
+        back_populates="parent",
     )

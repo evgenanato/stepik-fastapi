@@ -4,10 +4,13 @@ from pathlib import Path
 import uvicorn
 from fastapi import FastAPI
 
-sys.path.append(str(Path(__file__).parent.parent))
-
+from src.routers import users
 from src.routers import categories
 from src.routers import products
+from src.routers import reviews
+from src.routers import cart
+
+sys.path.insert(1, str(Path(__file__).parent.parent))
 
 # Создаём приложение FastAPI
 app = FastAPI(
@@ -18,6 +21,9 @@ app = FastAPI(
 # Подключаем маршруты категорий
 app.include_router(categories.router)
 app.include_router(products.router)
+app.include_router(users.router)
+app.include_router(reviews.router)
+app.include_router(cart.router)
 
 
 # Корневой эндпоинт для проверки
